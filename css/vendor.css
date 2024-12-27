@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Varela+Round&display=swap');
+*{
+    font-family: "Lato", serif;
+    margin:0;
+    padding:0;
+}
+body{
+    height: 100vh;
+    width: 100vw;
+}
+.wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+.right-panel{
+    width: 85%;
+    color: black;
+    height: 100%;
+}
+.horizantol-nav-container{
+    height: 70px;
+    background-color: rgb(110, 206, 26);
+}
+.vendor-nav-ul{
+    list-style: none;
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.vendor-nav-ul li{
+    display: inline-block;
+    height: 100%;
+    padding: 15px;
+    background-color: yellow;
+}
+.add-vendor-container{
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.vendor-form{
+    margin-top: 15px;
+    width: 60%;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    font-weight: 500;
+    width: 150px;
+    display: inline-block;
+}
+.form-group input, .form-group select {
+    width: 70%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.form-group button {
+    display: block;
+    width: 65%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 40px auto 0;
+}
+.form-group button:hover {
+    background-color: #0056b3;
+}

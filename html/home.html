@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMS-Home</title>
+    <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+    <section class="wrapper">
+        <custom-sidebar></custom-sidebar>
+        <main class="right-panel">
+            <div class="login-container">
+                <form action="" class="login-form">
+                    <h2>Admin Log-In</h2>
+                    <div class="inp-field">
+                        <label for="login-user-name">UserName*</label>
+                        <input type="text" name="login-user-name" id="login-user-name">
+                        <span class="err"></span>
+                    </div>
+                    <div class="inp-field">
+                        <label for="password">Password*</label>
+                        <input type="password" name="login-password" id="login-password">
+                        <span class="err"></span>
+                    </div>
+                    <button type="button" class="login-submit">Submit</button>
+                    <p>If not Registered, <span class="register-here">Register Here</span></p>
+                </form>
+            </div>
+            <div class="register-container">
+                <h2>Register Admin</h2>
+                <form action="" class="register-form">
+                    <div class="inp-field">
+                        <label for="reg-user-name">UserName*</label>
+                        <input type="text" name="reg-user-name" id="reg-user-name">
+                        <span class="err"></span>
+                    </div>
+                    <div class="inp-field">
+                        <label for="admin-mail">Email*</label>
+                        <input type="email" name="admin-mail" id="admin-mail">
+                        <span class="err"></span>
+                    </div>
+                    <div class="inp-field">
+                        <label for="reg-password">Password*</label>
+                        <input type="password" name="reg-password" id="reg-password">
+                        <span class="err"></span>
+                    </div>
+                    <div class="inp-field">
+                        <label for="contact">Contact</label>
+                        <input type="number" name="contact" id="contact">
+                        <span class="err"></span>
+                    </div>
+                    <p>If already have an account? <span class="login-here">Login Here</span> </p>
+                    <button type="button" class="register-submit">Submit</button>
+                </form>
+            </div>
+        </main>
+    </section>
+    <script src="../js/home.js"></script>
+    <script src="../js/sidebarcomponent.js"></script>
+</body>
+</html>

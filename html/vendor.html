@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMS-Vendor</title>
+    <link rel="stylesheet" href="../css/vendor.css">
+</head>
+<body>
+    <section class="wrapper">
+        <custom-sidebar></custom-sidebar>
+        <main class="right-panel">
+            <div class="horizantol-nav-container">
+                <ul class="vendor-nav-ul">
+                    <li>Add Vendor</li>
+                    <li>All Vendors</li>
+                    <li><input type="search" name="search-vendor" id="search-vendor"></li>
+                </ul>
+            </div>
+            <div class="add-vendor-container">
+                <form action="" class="vendor-form">
+                    <h2>Register Vendor</h2>
+                    <br>
+                    <div class="form-group">
+                        <label for="vendorName">Vendor Name</label>
+                        <input type="text" id="vendorName" name="vendorName" placeholder="Enter vendor name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceProvided">Service Provided</label>
+                        <input type="text" id="serviceProvided" name="serviceProvided" placeholder="Enter service provided" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" name="location" placeholder="Enter vendor location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPerson">Contact Person</label>
+                        <input type="text" id="contactPerson" name="contactPerson" placeholder="Enter contact person's name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendorType">Vendor Type</label>
+                        <select id="vendorType" name="vendorType" required>
+                            <option value="">--Select Vendor Type--</option>
+                            <option value="Service">Service</option>
+                            <option value="Product">Product</option>
+                            <option value="Consultant">Consultant</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number</label>
+                        <input type="tel" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendorMail">Vendor Email</label>
+                        <input type="email" id="vendorMail" name="vendorMail" placeholder="Enter email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" required placeholder="Enter password">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">Register Vendor</button>
+                    </div>
+                </form>
+            </div>
+            <div class="display-vendor-container"></div>
+        </main>
+    </section>
+    <script src="../js/addVendor.js"></script>
+    <script src="../js/sidebarcomponent.js"></script>
+</body>
+</html>
