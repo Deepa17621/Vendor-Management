@@ -11,7 +11,7 @@ class SidebarComponent extends HTMLElement {
         let shadow = this.attachShadow({ mode: "open" });
 
         const modules = {
-            "Admin": "/html/home.html",
+            "Admin": "/index.html",
             "Vendor": "/html/vendor.html",
             "User": "/html/user.html",
             "Services": "/html/services.html",

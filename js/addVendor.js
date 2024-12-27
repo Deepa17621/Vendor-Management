@@ -16,7 +16,7 @@ submitBtn.addEventListener("click", (e)=>{
     form.requestSubmit();
 });
 
-form.addEventListener("submit", (e)=>{
+form.addEventListener("submit", async(e)=>{
     e.preventDefault();
     let vendorObj = {
         vendorName: vendorName.value,
@@ -32,8 +32,29 @@ form.addEventListener("submit", (e)=>{
         performace:"",
         contractStartDate:"",
         contractEndDate:"",
-        
+
     }
+    let result = await addVendor(vendorObj, "vendor");
+
 });
+
+async function addVendor(obj, module) {
+    try {
+        let res = await fetch(`/post/${module}`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(obj)
+        });
+        if(res.ok){
+            let result = await res.json();
+            alert("Vendor has been added");
+        }
+        else{
+            throw new Error(res.status);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // Search Data And Display Vendor Details

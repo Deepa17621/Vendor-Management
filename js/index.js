@@ -70,7 +70,7 @@ function setError(tag, message) {
     tag.style.border= "2px solid red";
     tag.style.borderRadius="3px";
     tag.nextElementSibling.textContent = message;
-    tag.nextElementSibling.style.color=red;
+    tag.nextElementSibling.style.color="red";
     return;
 }
 
