@@ -39,15 +39,40 @@ registerSubmit.addEventListener("click", (e)=>{
     registerForm.requestSubmit();
 });
 
-loginForm.addEventListener("submit", (e)=>{
+loginForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
     !loginUserName.value?setError(loginUserName, "required"):setSuccess(loginUserName);
     !loginPassword.value?setError(loginPassword, "required"):setSuccess(loginPassword);
-
-    // Get Data and check whether the given data is present or not
+    console.log(loginUserName.value);
+    console.log(loginPassword.value);
+    try {
+        let res = await fetch(`/getByUsername/admin/${loginUserName.value}`, {
+            method:"GET",
+            headers:{"Content-Type":"application/json"}
+        });
+    if(res.ok){
+        let result = await res.json();
+        console.log(result);
+        
+        if(loginUserName.value === result.adminName){
+            if(loginPassword.value === result.adminPassword){
+                alert("Logged In Successfully!")
+            }
+            throw new Error("Password wrong")
+        }
+        else{
+            alert("user not found! Enter avlid Credentials");
+        }
+    }
+    else{
+        throw new Error("admin not found!");
+    }
+    } catch (error) {
+        
+    }
 });
 
-registerForm.addEventListener("click", (e)=>{
+registerForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
     !registerUserName.value?setError(registerUserName, "required"):setSuccess(registerUserName);
     !registerEmail.value?setError(registerEmail, "required"):setSuccess(registerEmail);
@@ -58,7 +83,24 @@ registerForm.addEventListener("click", (e)=>{
         "adminPassword":registerPassword.value,
         "adminContact":registerContact.value
     }
-    //Store data into DataBase
+    try {
+        let res=await fetch("/post/admin", {
+            method:"POST",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(adminObject)
+        });
+        if(res.ok){
+            console.log(await res.json());
+            
+            alert("SuccessFully Registered!");
+        }
+        else {
+            throw new Error(res.status+" error in storing admin data")
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    
 });
 
 function setSuccess(tag) {

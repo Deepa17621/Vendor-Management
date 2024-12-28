@@ -34,6 +34,8 @@ app.post('/post/:module', async (req, res) => {
     try {
         const { module }=req.params;
         const obj = req.body;
+        console.log(obj);
+        
         const result = await database.collection(module).insertOne(obj);
         res.status(201).send({ id: result.insertedId, message: `Successfully inserted!` });
     } catch (error) {
@@ -53,6 +55,20 @@ app.get('/getById/:module/:id', async(req, res)=>{
     } catch (error) {
         console.error("Error fetching user by ID:", error);
         res.status(500).send({ message: 'Error fetching user by ID' });
+    }
+});
+app.get('/getByUsername/:module/:username', async (req, res) => {
+    try {
+        const { module, username } = req.params;
+        const result = await database.collection(module).findOne({ adminName: username }); 
+        
+        if (!result) {
+            return res.status(404).send({ message: `${module} with username ${username} not found!` });
+        }
+        res.send(result);
+    } catch (error) {
+        console.error("Error fetching by username:", error);
+        res.status(500).send({ message: 'Error fetching by username' });
     }
 });
 
