@@ -9,7 +9,42 @@
 <body>
     <section class="wrapper">
         <custom-sidebar></custom-sidebar>
-        <main class="right-panel"></main>
+        <main class="right-panel">
+            <div class="form-container" id="form-container">
+                <!-- Registration Form -->
+                <div id="register-form">
+                    <h2>Register</h2>
+                    <form action="/register" method="POST">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                        
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email" required>
+                        
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                        
+                        <input type="submit" value="Register">
+                    </form>
+                    <button class="toggle-btn" onclick="toggleForm()">Already have an account? Login</button>
+                </div>
+        
+                <!-- Login Form -->
+                <div id="login-form" style="display: none;">
+                    <h2>Login</h2>
+                    <form action="/login" method="POST">
+                        <label for="login-username">Username:</label>
+                        <input type="text" id="login-username" name="username" required>
+                        
+                        <label for="login-password">Password:</label>
+                        <input type="password" id="login-password" name="password" required>
+                        
+                        <input type="submit" value="Login">
+                    </form>
+                    <button class="toggle-btn" onclick="toggleForm()">Don't have an account? Register</button>
+                </div>
+            </div>
+        </main>
     </section>
     <script src="../js/sidebarcomponent.js"></script>
 </body>

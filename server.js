@@ -77,7 +77,8 @@ app.get('/getAll/:module', async(req,res)=>{
     try {
         const { module }=req.params;
         const listOfUsers = await database.collection(module).find({}).toArray();
-        res.json(listOfUsers);
+        if(listOfUsers.ok) res.json(listOfUsers);
+        else throw new Error(listOfUsers.status)
     } catch (error) {
         console.error("Error fetching users:", error);
         res.status(500).send({ message: 'Error fetching users' });

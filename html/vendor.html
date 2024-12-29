@@ -20,53 +20,73 @@
             <div class="add-vendor-container">
                 <form action="" class="vendor-form">
                     <h2>Register Vendor</h2>
-                    <br>
                     <div class="form-group">
                         <label for="vendorName">Vendor Name</label>
-                        <input type="text" id="vendorName" name="vendorName" placeholder="Enter vendor name" required>
+                        <input type="text" id="vendorName" name="vendorName" placeholder="Enter vendor name" >
+                        <span class="err-span"></span>
                     </div>
                     <div class="form-group">
                         <label for="serviceProvided">Service Provided</label>
-                        <input type="text" id="serviceProvided" name="serviceProvided" placeholder="Enter service provided" required>
+                        <input type="text" id="serviceProvided" name="serviceProvided" placeholder="Enter service provided" >
+                        <span class="err-span"></span>
                     </div>
                     <div class="form-group">
                         <label for="location">Location</label>
-                        <input type="text" id="location" name="location" placeholder="Enter vendor location" required>
+                        <input type="text" id="location" name="location" placeholder="Enter vendor location" >
+                        <span class="err-span"></span>
                     </div>
                     <div class="form-group">
                         <label for="contactPerson">Contact Person</label>
-                        <input type="text" id="contactPerson" name="contactPerson" placeholder="Enter contact person's name" required>
+                        <input type="text" id="contactPerson" name="contactPerson" placeholder="Enter contact person's name" >
+                        <span class="err-span"></span>
                     </div>
                     <div class="form-group">
                         <label for="vendorType">Vendor Type</label>
-                        <select id="vendorType" name="vendorType" required>
+                        <select id="vendorType" name="vendorType" >
                             <option value="">--Select Vendor Type--</option>
                             <option value="Service">Service</option>
                             <option value="Product">Product</option>
                             <option value="Consultant">Consultant</option>
                         </select>
+                        <span class="err-span"></span>
                     </div>
                     <div class="form-group">
                         <label for="contactNumber">Contact Number</label>
-                        <input type="tel" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required>
+                        <input type="tel" id="contactNumber" name="contactNumber" placeholder="Enter contact number" >
+                        <span class="err-span"></span>
                     </div>
                     <div class="form-group">
                         <label for="vendorMail">Vendor Email</label>
-                        <input type="email" id="vendorMail" name="vendorMail" placeholder="Enter email address" required>
+                        <input type="email" id="vendorMail" name="vendorMail" placeholder="Enter email address" >
+                        <span class="err-span"></span>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password" required placeholder="Enter password">
-                    </div>
+                        <input type="password" name="password" id="password"  placeholder="Enter password">
+                        <span class="err-span"></span>
+                    </div> -->
                     <div class="form-group">
                         <button type="submit" class="submit-btn">Register Vendor</button>
                     </div>
                 </form>
             </div>
-            <div class="display-vendor-container"></div>
+            <div class="display-vendor-container">
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>Vendor-Id</th>
+                            <th>Vendor-Name</th>
+                            <th>Vendor-Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <dv class="list-vendors-container"></dv>
         </main>
     </section>
-    <script src="../js/addVendor.js"></script>
+    <script src="/js/addVendor.js"></script>
     <script src="../js/sidebarcomponent.js"></script>
 </body>
 </html>

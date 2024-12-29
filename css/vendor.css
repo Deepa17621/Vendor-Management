@@ -19,11 +19,12 @@ body{
     height: 100%;
 }
 .horizantol-nav-container{
-    height: 70px;
+    height: 60px;
     background-color: rgb(110, 206, 26);
 }
 .vendor-nav-ul{
     list-style: none;
+    height: 100%;
     width: 50%;
     display: flex;
     justify-content: space-around;
@@ -31,14 +32,14 @@ body{
 }
 .vendor-nav-ul li{
     display: inline-block;
-    height: 100%;
-    padding: 15px;
-    background-color: yellow;
+    cursor: pointer;
+    color: white;
 }
-.add-vendor-container{
+.add-vendor-container, .display-vendor-container, .list-vendors-container{
     display: none;
     justify-content: center;
-    align-items: center;
+    height: 80%;
+    overflow-y: scroll;
 }
 .vendor-form{
     margin-top: 15px;
@@ -68,8 +69,14 @@ body{
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 40px auto 0;
+    margin: 0px auto 0;
 }
 .form-group button:hover {
     background-color: #0056b3;
+}
+.err-span{
+    font-size: small;
+    color: red;
+    display: inline-block;
+    margin-left: 155px;
 }
