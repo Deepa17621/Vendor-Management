@@ -122,6 +122,10 @@ async function addVendor(obj, module) {
             if(updatedResult){
                 alert("Vendor Added to vendors and also to Service Category");
             }
+            let rating = await addToRatings(result);
+            if(rating){
+                console.log("Added to rating group");
+            }
         }
         else{
             throw new Error(res.status);
@@ -195,6 +199,31 @@ async function addVendorToService(vendorObj) {
     }
 }
 
+//Add Vendor ID to Ratings Collection
+async function addToRatings(vendor) {
+    try {
+        let res = await fetch(`/post/ratingsreviews`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({"vendorId":vendor._id,
+                                   "genericRating":"",
+                                   "quality":"",
+                                   "service":"",
+                                   "delivery":"",
+                                   "pricing":"",
+                                   "communication":""
+            })
+        });
+        if(res.ok){
+            return true;
+        }
+        else {
+            return false;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 addVendorBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     listOfVendorsContainer.style.display= "none";

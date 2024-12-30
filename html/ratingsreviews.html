@@ -9,8 +9,114 @@
 <body>
     <section class="wrapper">
         <custom-sidebar></custom-sidebar>
-        <main class="right-panel"></main>
+        <main class="right-panel">
+            <div class="container-nav">
+                <ul>
+                    <li class="update-btn">Update/Insert Rating</li>
+                    <li class="list-rating-btn">List Ratings from Highest</li>
+                </ul>
+            </div>
+            <div class="container-update">
+                <form action="">
+                    <div class="form-group">
+                        <label for="vendorId">Vendor Id</label>                   
+                        <select name="vendorId" id="vendorId"></select>
+                        <span class="err-span"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="generic-rating">Generic-Rating</label>
+                        <select name="generic-rating" id="generic-rating">
+                            <option value="">--Choose Rating--</option>
+                            <option value="1">1-Poor</option>
+                            <option value="2">2-Fair</option>
+                            <option value="3">3-Good</option>
+                            <option value="4">4-Very Good</option>
+                            <option value="5">5-Excellent</option>
+                        </select>
+                        <span class="err-span"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="quality">quality</label>
+                        <select name="quality" id="quality">
+                            <option value="">--Choose Rating--</option>
+                            <option value="1">1-Poor</option>
+                            <option value="2">2-Fair</option>
+                            <option value="3">3-Good</option>
+                            <option value="4">4-Very Good</option>
+                            <option value="5">5-Excellent</option>
+                        </select>
+                        <span class="err-span"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">service</label>
+                        <select name="service" id="service">
+                            <option value="">--Choose Rating--</option>
+                            <option value="1">1-Poor</option>
+                            <option value="2">2-Fair</option>
+                            <option value="3">3-Good</option>
+                            <option value="4">4-Very Good</option>
+                            <option value="5">5-Excellent</option>
+                        </select>
+                        <span class="err-span"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery">delivery</label>
+                        <select name="delivery" id="delivery">
+                            <option value="">--Choose Rating--</option>
+                            <option value="1">1-Poor</option>
+                            <option value="2">2-Fair</option>
+                            <option value="3">3-Good</option>
+                            <option value="4">4-Very Good</option>
+                            <option value="5">5-Excellent</option>
+                        </select>
+                        <span class="err-span"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="pricing">pricing</label>
+                        <select name="pricing" id="pricing">
+                            <option value="">--Choose Rating--</option>
+                            <option value="1">1-Poor</option>
+                            <option value="2">2-Fair</option>
+                            <option value="3">3-Good</option>
+                            <option value="4">4-Very Good</option>
+                            <option value="5">5-Excellent</option>
+                        </select>
+                        <span class="err-span"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="communication">communication</label>
+                        <select name="communication" id="communication">
+                            <option value="">--Choose Rating--</option>
+                            <option value="1">1-Poor</option>
+                            <option value="2">2-Fair</option>
+                            <option value="3">3-Good</option>
+                            <option value="4">4-Very Good</option>
+                            <option value="5">5-Excellent</option>
+                        </select>
+                        <span class="err-span"></span>
+                    </div>
+                    <button type="submit" class="submit">Submit Ratings</button>
+                </form>
+            </div>
+            <div class="container-list-ratings">
+                <table class="ratings-table">
+                    <thead>
+                        <tr>
+                            <th>Vendor ID</th>
+                            <th>Generic Rating</th>
+                            <th>Quality</th>
+                            <th>Service</th>
+                            <th>Delivery</th>
+                            <th>Communication</th>
+                            <th>Average</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </main>
     </section>
+    <script src="/js/ratingsreviews.js"></script>
     <script src="../js/sidebarcomponent.js"></script> 
 </body>
 </html>

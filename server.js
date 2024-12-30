@@ -98,6 +98,7 @@ app.put('/update/:module/:id', async (req, res) => {
         res.status(500).send({ message: 'Error updating user' });
     }
 });
+
 // Update-Service
 app.put('/updateService/:module/:serviceName/:vendorId/:flag', async (req, res) => {
     try {
