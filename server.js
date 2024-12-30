@@ -34,8 +34,6 @@ app.post('/post/:module', async (req, res) => {
     try {
         const { module }=req.params;
         const obj = req.body;
-        console.log(obj);
-        
         const result = await database.collection(module).insertOne(obj);
         res.status(201).send({ id: result.insertedId, message: `Successfully inserted!` });
     } catch (error) {
@@ -57,18 +55,17 @@ app.get('/getById/:module/:id', async(req, res)=>{
         res.status(500).send({ message: 'Error fetching user by ID' });
     }
 });
-app.get('/getByUsername/:module/:username', async (req, res) => {
+app.get('/getByKey/:module/:value/:keyy', async (req, res) => {
     try {
-        const { module, username } = req.params;
-        const result = await database.collection(module).findOne({ adminName: username }); 
-        
+        const { module, value, keyy } = req.params;
+        const result = await database.collection(module).findOne({ keyy: value }); 
         if (!result) {
-            return res.status(404).send({ message: `${module} with username ${username} not found!` });
+            return res.send({message:false});
         }
         res.send(result);
     } catch (error) {
-        console.error("Error fetching by username:", error);
-        res.status(500).send({ message: 'Error fetching by username' });
+        console.error("Error fetching by value:", error);
+        res.status(500).send({ message: 'Error fetching by value' });
     }
 });
 
@@ -77,7 +74,7 @@ app.get('/getAll/:module', async(req,res)=>{
     try {
         const { module }=req.params;
         const listOfUsers = await database.collection(module).find({}).toArray();
-        if(listOfUsers.ok) res.json(listOfUsers);
+        if(listOfUsers) res.json(listOfUsers);
         else throw new Error(listOfUsers.status)
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -93,6 +90,24 @@ app.put('/update/:module/:id', async (req, res) => {
         const updateUser = req.body;
         await database.collection(module).updateOne({ _id: new ObjectId(id) }, { $set: updateUser });
         res.send({ message: `user Updated!` });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).send({ message: 'Error updating user' });
+    }
+});
+// Update-Service
+app.put('/updateService/:module/:serviceName/:vendorId/:flag', async (req, res) => {
+    try {
+        const {module, serviceName, vendorId, flag} = req.params;
+        if(!flag){
+            await database.collection(module).updateOne({ service: serviceName }, { $addToSet: {vendors:vendorId} });
+            res.send({ message: `user Updated!` });
+        }
+        else{
+            await database.collection(module).insertOne({service: serviceName,vendors: [vendorId],});
+            res.send({ message: `user Updated!` });
+        }
+
     } catch (error) {
         console.error("Error updating user:", error);
         res.status(500).send({ message: 'Error updating user' });

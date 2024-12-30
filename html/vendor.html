@@ -26,8 +26,25 @@
                         <span class="err-span"></span>
                     </div>
                     <div class="form-group">
-                        <label for="serviceProvided">Service Provided</label>
-                        <input type="text" id="serviceProvided" name="serviceProvided" placeholder="Enter service provided" >
+                        <label for="serviceName">Service</label>
+                        <select id="serviceName" name="serviceName" >
+                            <option value="">--Select Vendor Type--</option>
+                            <option value="Logistics">Logistics</option>
+                            <option value="Catering">Catering</option>
+                            <option value="IT_Support">It Support</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Cleaning_Services">Cleaning Services</option>
+                            <option value="Security_Services">Security Services</option>
+                            <option value="Event_Management">Event Management</option>
+                            <option value="Consultancy">Consultancy</option>
+                            <option value="Healthcare_Services">Healthcare Services</option>
+                            <option value="Food_Beverage">Food and Beverage</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Education_Training">Education_Training</option>
+                        </select>
+                        <!-- <label for="serviceProvided">Service Provided</label>
+                        <input type="text" id="serviceProvided" name="serviceProvided" placeholder="Enter service provided" > -->
                         <span class="err-span"></span>
                     </div>
                     <div class="form-group">
@@ -70,7 +87,8 @@
                     </div>
                 </form>
             </div>
-            <div class="display-vendor-container">
+            <div class="display-vendor-container"></div>
+            <dv class="list-vendors-container">
                 <table class="list-table">
                     <thead>
                         <tr>
@@ -79,11 +97,9 @@
                             <th>Vendor-Type</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody class="tbody"></tbody>
                 </table>
-            </div>
-            <dv class="list-vendors-container"></dv>
+            </dv>
         </main>
     </section>
     <script src="/js/addVendor.js"></script>

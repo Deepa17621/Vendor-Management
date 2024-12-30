@@ -35,11 +35,33 @@ body{
     cursor: pointer;
     color: white;
 }
-.add-vendor-container, .display-vendor-container, .list-vendors-container{
+.add-vendor-container{
+    display: flex;
+    justify-content: center;
+    height: 80%;
+    overflow-y: scroll;
+}
+.display-vendor-container{
     display: none;
     justify-content: center;
     height: 80%;
     overflow-y: scroll;
+} 
+.list-vendors-container{
+    display: none;
+    overflow-y: scroll;
+    justify-content: center;
+    align-items: center;
+}
+.list-vendors-container table{
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    &>tr,td,th{
+        padding: 10px;
+        border: 1px solid black;
+        text-align: center;
+    }
 }
 .vendor-form{
     margin-top: 15px;

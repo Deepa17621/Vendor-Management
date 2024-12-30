@@ -1,13 +1,12 @@
 // Add New Vendor To Vendors List
 // form fields
 const vendorName = document.querySelector("#vendorName");
-const serviceName = document.querySelector("#serviceProvided");
+const serviceName = document.querySelector("#serviceName");
 const vendorLocation = document.querySelector("#location");
 const contactPerson = document.querySelector("#contactPerson");
 const vendorType = document.querySelector("#vendorType");
 const contactNumber = document.querySelector("#contactNumber");
 const vendorMail = document.querySelectorAll("#vendorMail");
-const password = document.querySelector("#password");
 
 let ratings, reviews, performace, contractStartDate, contractEndDate;
 
@@ -26,14 +25,13 @@ const displayVendorContainer = document.querySelector(".display-vendor-container
 
 //Table 
 const listTable = document.querySelector(".list-table");
-const tbodyOfList = listTable.getElementsByTagName("tbody");
+const tbodyOfList = document.querySelector(".tbody");
 
 function validatePattern(value, type) {
     const patterns = {
         email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Basic email regex
         contactNumber: /^\d{10}$/, // 10-digit phone number
-        text: /^[A-Za-z\s]+$/, // Alphabetical characters and spaces
-        password: /^.{8,}$/, // Minimum 8 characters
+        text: /^[A-Za-z\s_]+$/, // Alphabetical characters and spaces
     };
     return patterns[type]?.test(value);
 }
@@ -60,20 +58,17 @@ function validateForm() {
     };
 
     validateField(vendorName, "text", "Vendor Name is required and should only contain alphabets.");
-    validateField(serviceName, null, "Service Name is required.");
-    validateField(vendorLocation, null, "Location is required.");
+    validateField(serviceName, "text", "Service Name is required.");
+    validateField(vendorLocation, "text", "Location is required.");
     validateField(contactPerson, "text", "Contact Person is required and should only contain alphabets.");
-    validateField(vendorType, null, "Vendor Type is required.");
+    validateField(vendorType, "text", "Vendor Type is required.");
     validateField(contactNumber, "contactNumber", "Contact Number must be a valid 10-digit number.");
-    
+
     vendorMail.forEach(mail =>
         !mail.value.trim() || !validatePattern(mail.value, "email")
             ? (setError(mail, "A valid email address is required."), isValid = false)
             : clearError(mail)
     );
-
-    validateField(password, "password", "Password must be at least 8 characters long.");
-
     return isValid;
 }
 
@@ -93,12 +88,11 @@ form.addEventListener("submit", async(e)=>{
     let vendorObj = {
         vendorName: vendorName.value,
         serviceName:serviceName.value,
-        location:vendorLocation.value,
+        vendorLocation:vendorLocation.value,
         contactPerson:contactPerson.value,
         vendorType:vendorType.value,
         phone:contactNumber.value,
         vendorMail:vendorMail.value,
-        password:password.value,
         ratings:"",
         reviews:"",
         performace:"",
@@ -107,6 +101,11 @@ form.addEventListener("submit", async(e)=>{
 
     }
     let result = await addVendor(vendorObj, "vendor");
+    if(result){
+        // Add Vendor Id to service collection under particular service
+        let service = await addVendorToService(result);
+    }
+    form.reset();
 
 });
 
@@ -119,7 +118,10 @@ async function addVendor(obj, module) {
         });
         if(res.ok){
             let result = await res.json();
-            alert("Vendor has been added");
+            let updatedResult = await addVendorToService(result);
+            if(updatedResult){
+                alert("Vendor Added to vendors and also to Service Category");
+            }
         }
         else{
             throw new Error(res.status);
@@ -130,7 +132,6 @@ async function addVendor(obj, module) {
 }
 
 // List Down All the Vendors with Id And Service
-
 async function getAllVendors() {
     try {
         let res = await fetch(`/getAll/vendor`, {
@@ -138,14 +139,59 @@ async function getAllVendors() {
             headers:{"Content-Type": "application/json"},
         });
         if(res.ok){
-            console.log(await res.json());
-            return;
+            let allVendors = await res.json();
+            return allVendors;
         }
         else {
             throw new Error("Error in Fetching all the vendors Details");
         }
     } catch (error) {
         console.log("error in fetching all vendors Details");
+    }
+}
+
+//Add Vendor Id To Service
+async function addVendorToService(vendorObj) {
+
+    //1.Check whether the service is already there
+    try {
+        let vendor;
+        let vendorRes = await fetch(`/getById/vendor/${vendorObj.id}`, {
+            method:"GET",
+            headers: {"Content-Type":"application/json"}
+        });
+        if(vendorRes.ok) {
+            vendor= await vendorRes.json();
+        }
+        let service = await fetch(`/getByKey/service/${vendor.serviceName}/service`, {
+            method:"GET",
+            headers:{"Content-Type":"application/json"}
+        });
+        let data;
+        if(service.ok){
+            data = await service.json()
+            console.log(data.message);
+
+        }
+        let updateService='';
+        let addNewService;
+        if(data.message){
+            updateService = await fetch(`/updateService/service/${service.service}/${vendor._id}/true`, {
+                method:"PUT",
+                headers:{"Content-Type":"application/json"}
+            });
+        }
+        else{
+            addNewService = await fetch(`/updateService/service/${vendor.serviceName}/${vendor._id}/false`, {
+                method:"PUT",
+                headers:{"Content-Type":"application/json"}
+            }); 
+        }
+        if(updateService.ok || addNewService.ok){
+            return true;
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -158,37 +204,66 @@ addVendorBtn.addEventListener("click",(e)=>{
 
 lisDownVendorBtn.addEventListener("click", async(e)=>{
     e.preventDefault();
-    listOfVendorsContainer.style.display= "flex";
+    listOfVendorsContainer.style.display = "flex";
     displayVendorContainer.style.display = "none";
     formContainer.style.display = "none";
-    
-    try {
-        let res = await fetch("/getAll/vendor", {
-            method: "GET",
-            headers: {"Content-Type":"application/json"}
-        })
-        if(res.ok){
-            let allVendors = await res.json();
-            allVendors.forEach(vendor => {
-                let tr = document.createElement("tr");
-                tbodyOfList.appendChild(tr);
-                let tds = `<td class="vendor-id">${vendor._id}</td>
-                           <td class="vendor-name">${vendor.vemdorName}</td>
-                           <td class="vendor-type">${vendor.vendorType}</td>`;
-                tr.innerHTML = tds;
-            });
-        }
-        else{
-
-        }
-    } catch (error) {
-        
+    while (tbodyOfList.hasChildNodes()) {
+        tbodyOfList.firstChild.remove()
+    }
+    if(!tbodyOfList.hasChildNodes()){
+        await addDataToTable();
     }
 });
 
-searchVendor.addEventListener("input", (e)=>{
+async function addDataToTable() {
+    if(getAllVendors()){
+        let arr =await getAllVendors();
+    
+        arr.forEach(vendor => {
+            let trr = document.createElement("tr");
+            tbodyOfList.appendChild(trr);
+            trr.setAttribute("id", `${vendor._id}`);
+            trr.classList.add("row");
+            let tds = `<td class="vendor-id">${vendor._id}</td>
+                       <td class="vendor-name">${vendor.vendorName}</td>
+                       <td class="vendor-type">${vendor.vendorType}</td>`;
+            trr.innerHTML = tds;
+        });
+    }
+}
+addDataToTable();
+
+searchVendor.addEventListener("input", async(e)=>{
     e.preventDefault();
     formContainer.style.display = "none";
-    listOfVendorsContainer.style.display= "none";
-    displayVendorContainer.style.display = "flex";
+    listOfVendorsContainer.style.display= "flex";
+    // displayVendorContainer.style.display = "flex";
+    const searchId = (e.target.value);
+    console.log(searchId);
+    
+    if(getAllVendors()){
+        let arr = await getAllVendors();
+        let foundVendor = await arr.find(element => element._id === searchId);
+        if (foundVendor){
+            let vendorsRow = document.querySelectorAll(".row");
+            vendorsRow.forEach(element => {
+                element.style.display="none";
+            });
+            for (let i = 0; i < vendorsRow.length; i++) {
+                const element = vendorsRow[i];
+                if(element.id == foundVendor._id){
+                    element.style.display="flex";
+                }
+            }
+        }
+        else {
+            alert("No Vendor Found with this id");
+        }
+    }
+    else{
+        //Write error when Vendors is empty
+    }
+    searchVendor.value = '';
 });
+
+

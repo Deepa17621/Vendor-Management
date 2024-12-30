@@ -9,8 +9,29 @@
 <body>
     <section class="wrapper">
         <custom-sidebar></custom-sidebar>
-        <main class="right-panel"></main>
+        <main class="right-panel">
+            <div class="nav-Bar-Container">
+                <ul>
+                    <li class="btn-search-service">search vendor-group</li>
+                    <li class="btn-add-vendor">add vendor to service</li>
+                </ul>
+            </div>
+            <div class="container-add-vendor">
+                <form action="">
+                    <div class="form-group">
+                        <label for="service">Choose Service</label>
+                        <select name="service" id="service"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor">Vendors</label>
+                        <select name="vendor" id="vendor"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="container-list-vendors"></div>
+        </main>
     </section>
+    <script src="/js/service.js"></script>
     <script src="../js/sidebarcomponent.js"></script>
 </body>
 </html>
