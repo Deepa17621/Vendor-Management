@@ -41,6 +41,7 @@ app.post('/post/:module', async (req, res) => {
         res.status(500).send({ message: 'Error creating ' });
     }
 });
+
 //Get By Id
 app.get('/getById/:module/:id', async(req, res)=>{
     try {
@@ -58,7 +59,9 @@ app.get('/getById/:module/:id', async(req, res)=>{
 app.get('/getByKey/:module/:value/:keyy', async (req, res) => {
     try {
         const { module, value, keyy } = req.params;
-        const result = await database.collection(module).findOne({ keyy: value }); 
+        console.log(keyy);
+        console.log(value);
+        const result = await database.collection(module).findOne({ [keyy]: value }); 
         if (!result) {
             return res.send({message:false});
         }
@@ -99,8 +102,8 @@ app.put('/update/:module/:id', async (req, res) => {
 app.put('/updateService/:module/:serviceName/:vendorId/:flag', async (req, res) => {
     try {
         const {module, serviceName, vendorId, flag} = req.params;
-        if(!flag){
-            await database.collection(module).updateOne({ service: serviceName }, { $addToSet: {vendors:vendorId} });
+        if(flag){
+            await database.collection(module).updateOne({ service: serviceName }, { $addToSet: {vendors:vendorId} }, { upsert: true } );
             res.send({ message: `user Updated!` });
         }
         else{
@@ -129,4 +132,4 @@ app.get('*', (req, res) => {
 // Start the server
 app.listen(port, async () => {
     console.log(`Server is running on http://localhost:${port}`);
-});
+})
