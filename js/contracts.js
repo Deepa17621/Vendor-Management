@@ -55,8 +55,6 @@ contractForm.addEventListener('submit', function (event) {
     }
 
     const contractData = { "vendorId":`${vendorId}`, "service":`${service}`, "startDate":`${startDate}`, "endDate":`${endDate}` };
-    contractData.startDate = new Date(startDate);
-    contractData.endDate = new Date(endDate);
     fetch('/post/contract', {
         method: 'POST',
         headers: {
@@ -95,21 +93,3 @@ overlapForm.addEventListener('submit', function (event) {
     })
     .catch(error => console.error('Error:', error));
 });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     fetch('/api/viewContracts')
-//         .then(response => response.json())
-//         .then(data => {
-//             const contractList = document.getElementById('contractList');
-//             contractList.innerHTML = data.contracts.map(contract => `
-//                 <div>
-//                     <p><strong>Vendor ID:</strong> ${contract.vendorId}</p>
-//                     <p><strong>Service:</strong> ${contract.service}</p>
-//                     <p><strong>Start Date:</strong> ${contract.startDate}</p>
-//                     <p><strong>End Date:</strong> ${contract.endDate}</p>
-//                     <hr>
-//                 </div>
-//             `).join('');
-//         })
-//         .catch(error => console.log('Error:', error));
-// });

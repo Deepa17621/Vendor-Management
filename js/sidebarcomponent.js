@@ -78,7 +78,7 @@ class SidebarComponent extends HTMLElement {
         }
         .modules-li {
             width: 90%;
-            padding: 0.7rem;
+            padding: 0.7rem 0.6rem;
             border-radius: 0.5rem;
             text-align: left;
             font-weight:500;

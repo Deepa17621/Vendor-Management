@@ -13,10 +13,24 @@ let ratings, reviews, performace, contractStartDate, contractEndDate;
 const form = document.querySelector(".vendor-form");
 const submitBtn = document.querySelector(".submit-btn");
 
+(document.querySelectorAll(".toggle")).forEach(element => {
+    element.style.display="none"
+});
+
 //Top- Nav Bar
 const addVendorBtn = document.querySelector(".btn-add-vendor");
 const lisDownVendorBtn = document.querySelector(".btn-list-vendors");
-const searchVendor = document.querySelector("#search-vendor");
+const searchVendor = document.querySelector(".search-btn");
+let flag = true;
+let searchById=document.querySelector("#search-vendor");
+let searchByName= document.querySelector("#search-by-name");
+searchVendor.addEventListener("click", (e)=>{
+    e.preventDefault();
+    (document.querySelectorAll(".toggle")).forEach(element => {
+        element.style.display="block"
+    });
+    
+});
 
 //containers & wrapper
 const formContainer = document.querySelector(".add-vendor-container");
@@ -233,6 +247,10 @@ addVendorBtn.addEventListener("click",(e)=>{
     listOfVendorsContainer.style.display= "none";
     displayVendorContainer.style.display = "none";
     formContainer.style.display = "flex";
+    (document.querySelector(".search-btn")).classList.remove("true");
+    (document.querySelectorAll(".toggle")).forEach(element => {
+        element.style.display= "none";
+    });
 });
 
 lisDownVendorBtn.addEventListener("click", async(e)=>{
@@ -240,6 +258,7 @@ lisDownVendorBtn.addEventListener("click", async(e)=>{
     listOfVendorsContainer.style.display = "flex";
     displayVendorContainer.style.display = "none";
     formContainer.style.display = "none";
+    (document.querySelector(".search-btn")).classList.add("true");
     while (tbodyOfList.hasChildNodes()) {
         tbodyOfList.firstChild.remove()
     }
@@ -266,37 +285,71 @@ async function addDataToTable() {
 }
 addDataToTable();
 
-searchVendor.addEventListener("input", async(e)=>{
+searchById.addEventListener("input", async(e)=>{
     e.preventDefault();
     formContainer.style.display = "none";
     listOfVendorsContainer.style.display= "flex";
     // displayVendorContainer.style.display = "flex";
-    const searchId = (e.target.value);
-    console.log(searchId);
-    
-    if(getAllVendors()){
-        let arr = await getAllVendors();
-        let foundVendor = await arr.find(element => element._id === searchId);
-        if (foundVendor){
-            let vendorsRow = document.querySelectorAll(".row");
-            vendorsRow.forEach(element => {
-                element.style.display="none";
-            });
-            for (let i = 0; i < vendorsRow.length; i++) {
-                const element = vendorsRow[i];
-                if(element.id == foundVendor._id){
-                    element.style.display="flex";
+    let allVendors = await getAllVendors();
+
+    let filterItem = allVendors.filter(vendor=>{
+        if(vendor._id.includes(searchById.value)){
+            return vendor;
+        }
+    });
+    if(filterItem.length>0){
+        (document.querySelector(".not-found")).textContent="";
+        (document.querySelectorAll(".row")).forEach(element => {
+            element.style.display="none";
+        });
+        filterItem.forEach(obj => {
+            (document.querySelectorAll(".row")).forEach(element => {
+                if(element.id === obj._id){
+                    element.style.display="block"
                 }
-            }
-        }
-        else {
-            alert("No Vendor Found with this id");
-        }
-    }
+            });
+        });
+    }  
     else{
-        //Write error when Vendors is empty
-    }
-    searchVendor.value = '';
+        (document.querySelectorAll(".row")).forEach(element => {
+            element.style.display="none";
+        });
+        (document.querySelector(".not-found")).textContent="Not Found!"
+    } 
+    // searchById.value = '';
 });
 
+searchByName.addEventListener("input", async(e)=>{
+    e.preventDefault();
+    formContainer.style.display = "none";
+    listOfVendorsContainer.style.display= "flex";
+    // displayVendorContainer.style.display = "flex";
+    let allVendors = await getAllVendors();
+
+    let filterItem = allVendors.filter(vendor=>{
+        if(vendor.vendorName.toLowerCase().includes(searchByName.value.toLowerCase())){
+            return vendor;
+        }
+    });
+    if(filterItem.length>0){
+        (document.querySelector(".not-found")).textContent="";
+        (document.querySelectorAll(".row")).forEach(element => {
+            element.style.display="none";
+        });
+        filterItem.forEach(obj => {
+            (document.querySelectorAll(".row")).forEach(element => {
+                if(element.id === obj._id){
+                    element.style.display="block"
+                }
+            });
+        });
+    }  
+    else{
+        (document.querySelectorAll(".row")).forEach(element => {
+            element.style.display="none";
+        });
+        (document.querySelector(".not-found")).textContent="Not Found!"
+    } 
+    // searchByName.value = '';
+});
 

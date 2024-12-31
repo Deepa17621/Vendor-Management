@@ -37,7 +37,7 @@ app.post('/post/:module/:checkOverlap', async (req, res) => {
     }
     try {
         const overlappingContracts = await database.collection(module).find({
-            vendorId,
+            vendorId:vendorId,
             $or: [
                 { startDate: { $lte: new Date(endDate) }, endDate: { $gte: new Date(startDate) } },
             ],

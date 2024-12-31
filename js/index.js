@@ -74,46 +74,48 @@ loginForm.addEventListener("submit", async(e)=>{
 
 registerForm.addEventListener("submit", async(e)=>{
     e.preventDefault();
-    !registerUserName.value?setError(registerUserName, "required"):setSuccess(registerUserName);
-    !registerEmail.value?setError(registerEmail, "required"):setSuccess(registerEmail);
-    !registerPassword.value?setError(registerPassword):((registerPassword.value).trim()).length>=8?setSuccess(registerPassword):setError(registerPassword, "password shoulb atleast 8 characters");
-    let adminObject = {
-        "adminName": registerUserName.value,
-        "adminMail":registerEmail.value,
-        "adminPassword":registerPassword.value,
-        "adminContact":registerContact.value
-    }
-    try {
-        let res=await fetch("/post/admin", {
-            method:"POST",
-            headers:{"Content-Type": "application/json"},
-            body: JSON.stringify(adminObject)
-        });
-        if(res.ok){
-            console.log(await res.json());
-            
-            alert("SuccessFully Registered!");
+    let flag = false;
+    flag = !registerUserName.value?setError(registerUserName, "required"):setSuccess(registerUserName);
+    falg = !registerEmail.value?setError(registerEmail, "required"):setSuccess(registerEmail);
+    flag = !registerPassword.value?setError(registerPassword):((registerPassword.value).trim()).length>=8?setSuccess(registerPassword):setError(registerPassword, "password shoulb atleast 8 characters");
+    if(flag){
+        let adminObject = {
+            "adminName": registerUserName.value,
+            "adminMail":registerEmail.value,
+            "adminPassword":registerPassword.value,
+            "adminContact":registerContact.value
         }
-        else {
-            throw new Error(res.status+" error in storing admin data")
+        try {
+            let res=await fetch("/post/admin", {
+                method:"POST",
+                headers:{"Content-Type": "application/json"},
+                body: JSON.stringify(adminObject)
+            });
+            if(res.ok){
+                console.log(await res.json());
+                alert("SuccessFully Registered!");
+            }
+            else {
+                throw new Error(res.status+" error in storing admin data")
+            }
+        } catch (error) {
+            console.log(error);
         }
-    } catch (error) {
-        console.log(error);
     }
-    
 });
 
 function setSuccess(tag) {
     tag.style.border= "2px solid grey";
     tag.style.borderRadius= "3px";
     tag.nextElementSibling.textContent = "";
+    return true
 }
 function setError(tag, message) {
     tag.style.border= "2px solid red";
     tag.style.borderRadius="3px";
     tag.nextElementSibling.textContent = message;
     tag.nextElementSibling.style.color="red";
-    return;
+    return false;
 }
 
 
