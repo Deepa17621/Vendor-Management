@@ -13,7 +13,6 @@ class SidebarComponent extends HTMLElement {
         const modules = {
             "Admin": "/index.html",
             "Vendor": "/html/vendor.html",
-            "User": "/html/user.html",
             "Services": "/html/services.html",
             "Ratings-And-Reviews": "/html/ratingsreviews.html",
             "Performance-Metrics": "/html/performance.html",

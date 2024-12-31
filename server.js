@@ -63,8 +63,12 @@ app.get('/getByKey/:module/:value/:keyy', async (req, res) => {
         console.log(value);
         const result = await database.collection(module).findOne({ [keyy]: value }); 
         if (!result) {
+            console.log(result);
+            
             return res.send({message:false});
         }
+        console.log(result);
+        
         res.send(result);
     } catch (error) {
         console.error("Error fetching by value:", error);
@@ -98,7 +102,18 @@ app.put('/update/:module/:id', async (req, res) => {
         res.status(500).send({ message: 'Error updating user' });
     }
 });
-
+//upodate - send obj, using another key
+app.put('/updateExObj/:module/:key/:value', async (req, res) => {
+    try {
+        const {module, key, value} = req.params;
+        const updateUser = req.body;
+        await database.collection(module).updateOne({key:value }, { $set: updateUser }, { upsert: true });
+        res.send({ message: `user Updated!` });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).send({ message: 'Error updating user' });
+    }
+});
 // Update-Service
 app.put('/updateService/:module/:serviceName/:vendorId/:flag', async (req, res) => {
     try {

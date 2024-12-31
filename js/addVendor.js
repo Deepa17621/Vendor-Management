@@ -101,10 +101,10 @@ form.addEventListener("submit", async(e)=>{
 
     }
     let result = await addVendor(vendorObj, "vendor");
-    if(result){
-        // Add Vendor Id to service collection under particular service
-        let service = await addVendorToService(result);
-    }
+    // if(result){
+    //     // Add Vendor Id to service collection under particular service
+    //     let service = await addVendorToService(result);
+    // }
     form.reset();
 
 });
@@ -201,11 +201,15 @@ async function addVendorToService(vendorObj) {
 
 //Add Vendor ID to Ratings Collection
 async function addToRatings(vendor) {
+    let data = await vendor;
+    console.log(data);
+    
     try {
         let res = await fetch(`/post/ratingsreviews`, {
             method:"POST",
             headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({"vendorId":vendor._id,
+            body: JSON.stringify({
+                                   "vendorId":`${vendor.id}`,
                                    "genericRating":"",
                                    "quality":"",
                                    "service":"",

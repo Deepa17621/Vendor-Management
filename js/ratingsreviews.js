@@ -40,6 +40,39 @@ async function getAll() {
 }
 getAll(); // Add options to VENDOR ID's
 
+async function updateRating(newObj, vendorId, key) {
+    try {
+        let res = await fetch(`/updateExObj/ratingsreviews/${key}/${vendorId}`, {
+            method:"GET",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(newObj)
+        });
+        if(res.ok){
+            alert("Updated!!!")
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function getByKey(vendorId) {
+    try {
+        let res = await fetch(`/getByKey/ratingsreviews/${vendorId.value}/vendorId`, {
+            method:"GET",
+            headers:{"Content-Type":"application/json"}
+        });
+        if(res.ok){
+            let exRatingObj=await res.json();
+            console.log(exRatingObj);
+            
+            if(vendorId.value === exRatingObj.vendorId){
+                return exRatingObj;
+            }
+        }
+    } catch (error) {
+     console.log(error);  
+    }
+}
+
 form.addEventListener("submit", async(e)=>{
     e.preventDefault();
     !vendorId.value?setError(vendorId):setSuccess(vendorId);
@@ -58,8 +91,13 @@ form.addEventListener("submit", async(e)=>{
         "pricing":pricing.value,
         "comunication":communication.value
     }
-    let getRating = await getByKey(vendorId);  // get rating object using vendorId
+    let getRating = await getByKey(vendorId);  
+    // get rating object using vendorId
+    console.log(getRating);
+    
     if(getRating){
+        console.log(getRating);
+        
         if(getRating.vendorId===vendorId.value){
             getRating.vendorId=newRatingObj.vendorId;
             getRating.genericRating=newRatingObj.genericRating;
@@ -67,8 +105,8 @@ form.addEventListener("submit", async(e)=>{
             getRating.service=newRatingObj.service;
             getRating.delivery = newRatingObj.service
             getRating.pricing = newRatingObj.pricing;
-            getRating.communication=newRatingObj.communication;
-            let updateRating = await updateRating(newRatingObj);
+            getRating.communication=newRatingObj.comunication;
+            let updateRating = await updateRating(newRatingObj, getRating.vendorId, "vendorId");
         }
     }
 });
@@ -76,30 +114,6 @@ submitBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     form.requestSubmit();
 });
-
-async function getByKey(vendorId) {
-    try {
-        let res = await fetch(`/getByKey/ratingsreviews/${vendorId.value}/vendorId`, {
-            method:"GET",
-            headers:{"Content-Type":"application/json"}
-        });
-        if(res.ok){
-            let exRatingObj=await res.json();
-            if(vendorId.value === exRatingObj.vendorId){
-                return exRatingObj;
-            }
-        }
-    } catch (error) {
-     console.log(error);  
-    }
-}
-async function updateRating(newObj, vendorId, ratingId) {
-    try {
-        let res = await fetch(`/update/`)
-    } catch (error) {
-        
-    }
-}
 
 function setError(tag) {
     tag.style.border = "1px solid red";
