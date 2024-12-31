@@ -77,9 +77,13 @@ label{
     width: 150px;
     display: inline-flex;
 }
-input{
+input, select{
     width: 170px;
     padding: 8px;
+}
+select{
+    display: inline-block;
+   width: 190px;
 }
 .form-group{
     margin-bottom: 20px;

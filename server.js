@@ -28,7 +28,32 @@ async function connectToMongoDB() {
     }
 }
 connectToMongoDB(); 
+//----------OverLap------
+app.post('/post/:module/:checkOverlap', async (req, res) => {
+    const { vendorId, startDate, endDate } = req.body;
+    const {module} = req.params;
+    if (!vendorId || !startDate || !endDate) {
+        return res.status(400).json({ error: 'Vendor ID, startDate, and endDate are required.' });
+    }
+    try {
+        const overlappingContracts = await database.collection(module).find({
+            vendorId,
+            $or: [
+                { startDate: { $lte: new Date(endDate) }, endDate: { $gte: new Date(startDate) } },
+            ],
+        }).toArray();
 
+        res.json({
+            overlap: overlappingContracts.length > 0,
+            overlappingContracts,
+        });
+    } catch (err) {
+        console.error('Error checking overlap:', err);
+        res.status(500).json({ error: 'Failed to check overlap' });
+    }
+});
+
+//-----------------------
 // Post
 app.post('/post/:module', async (req, res) => {
     try {

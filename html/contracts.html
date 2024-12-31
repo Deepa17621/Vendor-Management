@@ -23,7 +23,10 @@
                     <form id="contractForm">
                         <div class="form-group">
                             <label for="vendorId">Vendor ID:</label>
-                            <input type="text" id="vendorId" required>
+                            <!-- <input type="text" id="vendorId" required> -->
+                            <select name="vendorId" id="vendorId">
+                                <option value="">Choose Vendor</option>
+                             </select>
                         </div>
                         <div class="form-group">
                             <label for="service">Service Type:</label>
@@ -37,7 +40,7 @@
                             <label for="endDate">End Date:</label>
                             <input type="date" id="endDate" required>
                         </div>
-                        <button type="submit">Add Contract</button>
+                        <button type="submit" class="add">Add Contract</button>
                     </form>
                 </div>
         
@@ -46,7 +49,10 @@
                     <form id="overlapForm">
                         <div class="form-group">
                             <label for="vendorIdCheck">Vendor ID:</label>
-                            <input type="text" id="vendorIdCheck" required>
+                            <!-- <input type="text" id="vendorIdCheck" required> -->
+                             <select name="vendorIdCheck" id="vendorIdCheck">
+                                <option value="">Choose Vendor</option>
+                             </select>
                         </div>
                         <div class="form-group">
                             <label for="startDateCheck">Start Date:</label>
@@ -56,7 +62,7 @@
                             <label for="endDateCheck">End Date:</label>
                             <input type="date" id="endDateCheck" required>
                         </div>
-                        <button type="submit">Check Overlap</button>
+                        <button type="submit" class="check">Check Overlap</button>
                     </form>
                     <div id="overlapResult"></div>
                 </div>
