@@ -43,7 +43,7 @@ getAll(); // Add options to VENDOR ID's
 async function updateRating(newObj, vendorId, key) {
     try {
         let res = await fetch(`/updateExObj/ratingsreviews/${key}/${vendorId}`, {
-            method:"GET",
+            method:"PUT",
             headers:{"Content-Type":"application/json"},
             body: JSON.stringify(newObj)
         });
@@ -91,13 +91,11 @@ form.addEventListener("submit", async(e)=>{
         "pricing":pricing.value,
         "comunication":communication.value
     }
-    let getRating = await getByKey(vendorId);  
+    let getRating = await getByKey(vendorId);
+
     // get rating object using vendorId
-    console.log(getRating);
-    
     if(getRating){
         console.log(getRating);
-        
         if(getRating.vendorId===vendorId.value){
             getRating.vendorId=newRatingObj.vendorId;
             getRating.genericRating=newRatingObj.genericRating;
@@ -106,7 +104,7 @@ form.addEventListener("submit", async(e)=>{
             getRating.delivery = newRatingObj.service
             getRating.pricing = newRatingObj.pricing;
             getRating.communication=newRatingObj.comunication;
-            let updateRating = await updateRating(newRatingObj, getRating.vendorId, "vendorId");
+            await updateRating(newRatingObj, getRating.vendorId, "vendorId");
         }
     }
 });
@@ -125,3 +123,52 @@ function setSuccess(tag) {
     tag.nextElementSibling.style.textConent = "";
     tag.nextElementSibling.style.color = "";
 }
+
+// LIST Ratings from highest 
+const ratingsTable = document.querySelector('.ratings-table');
+const tbody = ratingsTable.querySelector("tbody");
+
+async function getAllRatings() {
+    try {
+        let res = await fetch('/getAll/ratingsreviews', {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" }
+        });
+        if (res.ok) {
+            let data = await res.json();
+            populateTable(data);  
+        }
+    } catch (error) {
+        console.log("Error fetching ratings:", error);
+    }
+}
+
+function calculateAverage(ratingObj) {
+    const properties = ['genericRating', 'quality', 'service', 'delivery', 'pricing', 'comunication'];
+    const sum = properties.reduce((acc, prop) => acc + parseFloat(ratingObj[prop]), 0);
+    return sum / properties.length;
+}
+
+function populateTable(data) {
+    data.sort((a, b) => calculateAverage(b) - calculateAverage(a)); // Sorting by highest average
+
+    tbody.innerHTML = '';
+
+    data.forEach(ratingObj => {
+        const average = calculateAverage(ratingObj);  
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${ratingObj.vendorId}</td>
+            <td>${ratingObj.genericRating}</td>
+            <td>${ratingObj.quality}</td>
+            <td>${ratingObj.service}</td>
+            <td>${ratingObj.delivery}</td>
+            <td>${ratingObj.pricing}</td>
+            <td>${ratingObj.communication}</td>
+            <td>${average.toFixed(2)}</td> <!-- Show the average with 2 decimals -->
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+getAllRatings();
