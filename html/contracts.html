@@ -9,8 +9,66 @@
 <body>
     <section class="wrapper">
         <custom-sidebar></custom-sidebar>
-        <main class="right-panel"></main>
+        <main class="right-panel">
+            <div class="topbar">
+                <ul>
+                    <li><a href="#addContract" class="nav-item" onclick="showContainer('addContract')">Add Contract</a></li>
+                    <li><a href="#checkOverlap" class="nav-item" onclick="showContainer('checkOverlap')">Check Overlap</a></li>
+                    <li><a href="#viewContracts" class="nav-item" onclick="showContainer('viewContracts')">View Contracts</a></li>
+                </ul>
+            </div>
+            <div class="main-content">
+                <div id="addContract" class="container">
+                    <h2>Add Contract To Vendors</h2>
+                    <form id="contractForm">
+                        <div class="form-group">
+                            <label for="vendorId">Vendor ID:</label>
+                            <input type="text" id="vendorId" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Type:</label>
+                            <input type="text" id="service" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date:</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+                        <button type="submit">Add Contract</button>
+                    </form>
+                </div>
+        
+                <div id="checkOverlap" class="container">
+                    <h2>Check Overlap Contracts Of Vendors</h2>
+                    <form id="overlapForm">
+                        <div class="form-group">
+                            <label for="vendorIdCheck">Vendor ID:</label>
+                            <input type="text" id="vendorIdCheck" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDateCheck">Start Date:</label>
+                            <input type="date" id="startDateCheck" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDateCheck">End Date:</label>
+                            <input type="date" id="endDateCheck" required>
+                        </div>
+                        <button type="submit">Check Overlap</button>
+                    </form>
+                    <div id="overlapResult"></div>
+                </div>
+        
+                <div id="viewContracts" class="container">
+                    <h2>All Contracts of Vendors</h2>
+                    <div id="contractList"></div>
+                </div>
+            </div>
+        </main>
     </section>
+    <script src="/js/contracts.js"></script>
     <script src="../js/sidebarcomponent.js"></script>
 </body>
 </html>
