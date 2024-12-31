@@ -259,12 +259,6 @@ lisDownVendorBtn.addEventListener("click", async(e)=>{
     displayVendorContainer.style.display = "none";
     formContainer.style.display = "none";
     (document.querySelector(".search-btn")).classList.add("true");
-    while (tbodyOfList.hasChildNodes()) {
-        tbodyOfList.firstChild.remove()
-    }
-    if(!tbodyOfList.hasChildNodes()){
-        await addDataToTable();
-    }
 });
 
 async function addDataToTable() {
