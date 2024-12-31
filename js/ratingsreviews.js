@@ -150,10 +150,10 @@ function calculateAverage(ratingObj) {
 }
 
 function populateTable(data) {
-    data.sort((a, b) => calculateAverage(b) - calculateAverage(a)); // Sorting by highest average
-
     tbody.innerHTML = '';
-
+    data.sort((a, b) => calculateAverage(b) - calculateAverage(a)); // Sorting by highest average
+    console.log(data);
+    
     data.forEach(ratingObj => {
         const average = calculateAverage(ratingObj);  
         const row = document.createElement('tr');
@@ -164,7 +164,7 @@ function populateTable(data) {
             <td>${ratingObj.service}</td>
             <td>${ratingObj.delivery}</td>
             <td>${ratingObj.pricing}</td>
-            <td>${ratingObj.communication}</td>
+            <td>${ratingObj.comunication}</td>
             <td>${average.toFixed(2)}</td> <!-- Show the average with 2 decimals -->
         `;
         tbody.appendChild(row);
