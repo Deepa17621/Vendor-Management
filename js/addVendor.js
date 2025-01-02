@@ -21,7 +21,7 @@ const submitBtn = document.querySelector(".submit-btn");
 const addVendorBtn = document.querySelector(".btn-add-vendor");
 const lisDownVendorBtn = document.querySelector(".btn-list-vendors");
 const searchVendor = document.querySelector(".search-btn");
-let flag = true;
+searchVendor.style.display="none";
 let searchById=document.querySelector("#search-vendor");
 let searchByName= document.querySelector("#search-by-name");
 searchVendor.addEventListener("click", (e)=>{
@@ -246,6 +246,7 @@ addVendorBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     listOfVendorsContainer.style.display= "none";
     displayVendorContainer.style.display = "none";
+    searchVendor.style.display = "none";
     formContainer.style.display = "flex";
     (document.querySelector(".search-btn")).classList.remove("true");
     (document.querySelectorAll(".toggle")).forEach(element => {
@@ -257,6 +258,7 @@ lisDownVendorBtn.addEventListener("click", async(e)=>{
     e.preventDefault();
     listOfVendorsContainer.style.display = "flex";
     displayVendorContainer.style.display = "none";
+    searchVendor.style.display = "block"
     formContainer.style.display = "none";
     (document.querySelector(".search-btn")).classList.add("true");
 });
@@ -269,6 +271,10 @@ async function addDataToTable() {
             let trr = document.createElement("tr");
             tbodyOfList.appendChild(trr);
             trr.setAttribute("id", `${vendor._id}`);
+            trr.addEventListener("click", (e)=>{
+                e.preventDefault();
+                window.location.href = `/html/displayVendor.html?id=${trr.id}`;
+            });
             trr.classList.add("row");
             let tds = `<td class="vendor-id">${vendor._id}</td>
                        <td class="vendor-name">${vendor.vendorName}</td>
@@ -293,13 +299,16 @@ searchById.addEventListener("input", async(e)=>{
     });
     if(filterItem.length>0){
         (document.querySelector(".not-found")).textContent="";
-        (document.querySelectorAll(".row")).forEach(element => {
-            element.style.display="none";
-        });
+        // (document.querySelectorAll(".row")).forEach(element => {
+        //     element.style.display="none";
+        // });
         filterItem.forEach(obj => {
             (document.querySelectorAll(".row")).forEach(element => {
                 if(element.id === obj._id){
-                    element.style.display="block"
+                    element.style.display="table-row"
+                }
+                else{
+                    element.style.display="none";
                 }
             });
         });
@@ -327,13 +336,16 @@ searchByName.addEventListener("input", async(e)=>{
     });
     if(filterItem.length>0){
         (document.querySelector(".not-found")).textContent="";
-        (document.querySelectorAll(".row")).forEach(element => {
-            element.style.display="none";
-        });
+        // (document.querySelectorAll(".row")).forEach(element => {
+        //     element.style.display="none";
+        // });
         filterItem.forEach(obj => {
             (document.querySelectorAll(".row")).forEach(element => {
                 if(element.id === obj._id){
-                    element.style.display="block"
+                    element.style.display="table-row";
+                }
+                else{
+                    element.style.display="none"
                 }
             });
         });
